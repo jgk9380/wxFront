@@ -1,0 +1,38 @@
+
+img {
+  /*margin: 0 auto;*/
+  /*width: 100px;*/
+  /*height: 100px;*/
+  /*!*border: 1px solid #F00*!*/
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+form{
+  margin-top: 1em;
+  background-color: #5f8c8a;
+}
+
+fieldset {
+  background: rgba(255,255,255,.3);
+  border-color: rgba(255,255,255,6);
+  border-style: solid;
+  border-width: 2px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  line-height: 30px;
+  list-style: none;
+  padding: 5px 10px;
+  margin-bottom: 2px;
+}
+
+
+fieldset legend {
+  color:#302A2A;
+  font: bold 16px/2 Verdana, Geneva, sans-serif;
+  font-weight: bold;
+  text-align: left;
+  text-shadow: 2px 2px 2px rgb(88, 126, 156);
+}

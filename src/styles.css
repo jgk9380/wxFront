@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/*@import url('../node_modules/primeng/resources/themes/omega/theme.css');*/
+/*@import url('../node_modules/primeng/resources/primeng.min.css');*/
+/*!*一套绝佳的图标字体库和CSS框架:awesome*!*/
+/*@import url('../node_modules/font-awesome/css/font-awesome.min.css');*/
+@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+@import url("../node_modules/angular2-toaster/toaster.css");
+/*<link rel="stylesheet" type="text/css" href="YOUR_PATH/font-awesome.min.css" />*/
+
+/* TODO: this should really be in the component's CSS file, but it doesn't seem to apply to the PrimeNG data table properly there */
+.checking-row {
+  /* TODO: first try this without '!important', but you might need it */
+  color: #ff0000;
+  /*background-color: #1b5f85;*/
+}
+
+.checked-row {
+  /* TODO: first try this without '!important', but you might need it */
+  color: #2f35ff;
+  /*background-color: #1b5f85;*/
+}
+
+
