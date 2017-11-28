@@ -3,13 +3,13 @@
 <div class="container-fluid" *ngIf="wxUser">
 
   <div class="row">
-    <div class="col-sm-offset-5  col-sm-1">
+    <div class="col-xs-offset-5  col-xs-1">
       <img class="img-circle"      [src]="wxUser?.headimgurl"     height="100" width="100" alt=" "/>
       <!--src="http://wx.qlogo.cn/mmopen/QAm7hEbaujRBnBAfV6ySjrwbJptlMk2rv6xZ82toUTlpUBIrU7ianfka4anWDIbEshP6ztP4mVibaiclMhDrcnz7g/0"-->
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-offset-5  col-sm-1">
+    <div class="col-xs-offset-5  col-xs-1">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;({{wxUser.id}})
     </div>
   </div>
@@ -18,35 +18,35 @@
     <fieldset name="bindTele" >
       <legend >号码绑定</legend>
       <!--<div class="row text-center" style="margin-bottom: 1em;margin-top: 1em;">-->
-        <!--<span class="col-sm-offset-5  col-sm-1">号码绑定</span>-->
+        <!--<span class="col-xs-offset-5  col-xs-1">号码绑定</span>-->
       <!--</div>-->
       <div class="form-group">
-        <label for="nicknae" class="col-sm-2 control-label">昵称：</label>
-        <div class="col-sm-7">
+        <label for="nicknae" class="col-xs-2 control-label">昵称：</label>
+        <div class="col-xs-7">
           <input  class="form-control" id="nicknae" name="nickName" [(ngModel)]="wxUser.nickname" disabled>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="tele" class="col-sm-2 control-label">电话号码：</label>
-        <div class="col-sm-7">
+        <label for="tele" class="col-xs-2 control-label">电话号码：</label>
+        <div class="col-xs-7">
           <input  class="form-control" id="tele" name="tele" placeholder="电话号码" [(ngModel)]="newTele" [disabled]="isTeleDisable()">
         </div>
       </div>
 
       <div class="form-group" *ngIf="!isTeleDisable()&&wxUser.tele!=newTele">
-        <label for="authCode" class="col-sm-2 control-label">验证码：</label>
-        <div class="col-sm-5">
+        <label for="authCode" class="col-xs-2 control-label">验证码：</label>
+        <div class="col-xs-5">
           <input type="password" class="form-control" id="authCode" name="authCode" [(ngModel)]="authCode" placeholder="验证码">
         </div>
-        <div class="col-sm-2">
+        <div class="col-xs-2">
           <button (click)="getAuthCode()" [disabled]="getAuthCodeButtonDisable">{{getAuthCodeButtonTitle}}</button>
           <!--"获取验证码";-->
         </div>
       </div>
 
       <div class="form-group" *ngIf="!isTeleDisable()">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-xs-offset-2 col-xs-10">
           <button type="submit" class="btn btn-success" (click)="bindTele()" >提交绑定号码</button>
         </div>
       </div>
@@ -55,24 +55,24 @@
     <fieldset>
       <legend>用户资料</legend>
       <!--<div class="row text-center" style="margin-bottom: 1em;margin-top: 1em;">-->
-        <!--<span class="col-sm-offset-5  col-sm-1">用户资料</span>-->
+        <!--<span class="col-xs-offset-5  col-xs-1">用户资料</span>-->
       <!--</div>-->
       <div class="form-group">
-        <label for="userName" class="col-sm-2 control-label">用户姓名：</label>
-        <div class="col-sm-7">
+        <label for="userName" class="col-xs-2 control-label">用户姓名：</label>
+        <div class="col-xs-7">
           <input type="email" class="form-control" id="userName" name="userName" placeholder="用户姓名" [(ngModel)]="wxUser.longName">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="address" class="col-sm-2 control-label">邮寄地址：</label>
-        <div class="col-sm-7">
+        <label for="address" class="col-xs-2 control-label">邮寄地址：</label>
+        <div class="col-xs-7">
           <input class="form-control" id="address" name="address" placeholder="邮寄地址" [(ngModel)]="wxUser.mailAddr">
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-xs-offset-2 col-xs-10">
           <button type="submit" class="btn btn-success" (click)="submitUserInfo()">提交用户资料</button>
         </div>
       </div>

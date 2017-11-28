@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import "rxjs/add/observable/forkJoin";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {ActivatedRoute, Params} from "@angular/router";
+import {WxCodeService} from "../wx.service";
 @Component({
   selector: 'app-bind',
   templateUrl: './bind.component.html',
@@ -29,12 +30,13 @@ export class BindComponent implements OnInit {
       positionClass: "toast-center"
     });
 
-  constructor(private  httpClient: HttpClient, private  toasterService: ToasterService, private activatedRoute: ActivatedRoute) {
+  constructor(private  httpClient: HttpClient, private  toasterService: ToasterService, private activatedRoute: ActivatedRoute,private wxCodeService: WxCodeService) {
 
   }
 
   ngOnInit() {
-    let code=this.getRequestParams()["code"];
+    //let code=this.getRequestParams()["code"];
+    let code=this.wxCodeService.code;
     //let code = this.getQueryString("code");
     alert("code=" + code);
     alert("location=" + window.location);
@@ -167,7 +169,7 @@ export class BindComponent implements OnInit {
       console.log("str=" + str);
       var strs = str.split("&");
       for (var i = 0; i < strs.length; i++) {
-        theRequest[strs[i].split("=")[0]] = window.unescape(strs[i].split("=")[1]);
+        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
       }
     }
     console.log("theRequest=" + JSON.stringify(theRequest))

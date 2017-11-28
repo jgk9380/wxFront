@@ -11,6 +11,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ToasterService, ToasterModule} from "angular2-toaster";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {WxCodeService} from "./wx.service";
 
 
 
@@ -28,7 +29,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ToasterModule,
     BrowserAnimationsModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy, },ToasterService],//tomcat下路由刷新的问题
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy, },ToasterService,WxCodeService],//tomcat下路由刷新的问题
   bootstrap: [AppComponent]
 })
 
