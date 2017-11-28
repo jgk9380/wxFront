@@ -3,6 +3,7 @@ import {unescape} from "querystring";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/observable/forkJoin";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
+import {ActivatedRoute, Params} from "@angular/router";
 @Component({
   selector: 'app-bind',
   templateUrl: './bind.component.html',
@@ -10,7 +11,9 @@ import {ToasterService, ToasterConfig} from "angular2-toaster";
 })
 
 export class BindComponent implements OnInit {
-  baseUrl = "http://127.0.0.1";
+
+  // baseUrl = "http://127.0.0.1";
+  baseUrl = "http://www.cu0515.com";
   // url = "http://www.cu0515.com/wx/codeToOpenId/";
   wxUser: any;
   authCode: string;
@@ -22,19 +25,31 @@ export class BindComponent implements OnInit {
     new ToasterConfig({
       showCloseButton: true,
       tapToDismiss: true,
-      timeout: 2000,
+      timeout: 3000,
       positionClass: "toast-center"
     });
 
-  constructor(private  httpClient: HttpClient, private  toasterService: ToasterService) {
+  constructor(private  httpClient: HttpClient, private  toasterService: ToasterService, private activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    let code = this.getUrlParam("code");
+    let code=this.getRequestParams()["code"];
+    //let code = this.getQueryString("code");
+    alert("code=" + code);
+    alert("location=" + window.location);
+    // var search = window.location.search();
+    // alert("search="+search);
+    // this.activatedRoute.params.subscribe((params: Params) => {
+    //     let code1 = params["code"];
+    //     console.log("code1=" + code1 + "  params=" + JSON.stringify(params));
+    //   }
+    // )
+    // alert("location=" + window.location);
     if (!code) {
       code = "authdeny";
     }
+
     var x = this.httpClient.get(this.baseUrl + "/wx/codeToOpenId/" + code).subscribe(data => {
         var tempResult: any = data;
         this.wxUser = tempResult.data;
@@ -46,7 +61,7 @@ export class BindComponent implements OnInit {
 
 
   getAuthCode() {
-    this.httpClient.get(this.baseUrl + "/NoAuthService/smsAuth/" + this.newTele).subscribe(data => {
+    this.httpClient.get(this.baseUrl + "/public/smsAuth/" + this.newTele).subscribe(data => {
       var temp: any = data;
       console.log(data);
       if (temp.errorCode == 0) {
@@ -54,7 +69,7 @@ export class BindComponent implements OnInit {
         this.toasterService.pop({
           type: 'success',
           title: '验证码发送成功，请查收！',
-          showCloseButton:true,
+          showCloseButton: true,
         });
         var restTime = 60;
         this.getAuthCodeButtonDisable = true;
@@ -74,9 +89,9 @@ export class BindComponent implements OnInit {
 
   bindTele() {
     ///NoAuthService/bindTele/{wxUserId}/{tele}/{code}
-    var url = "/NoAuthService/bindTele/" + this.wxUser.id + "/" + this.newTele + "/" + this.authCode;
+    var url = "/public/bindTele/" + this.wxUser.id + "/" + this.newTele + "/" + this.authCode;
     console.log("url=" + this.baseUrl + url);
-    this.httpClient.post(this.baseUrl + url).subscribe(data => {
+    this.httpClient.post(this.baseUrl + url, {}).subscribe(data => {
       console.log("bind result=" + JSON.stringify(data));
       var result: any = data;
       if (result.code == 0) {
@@ -86,15 +101,15 @@ export class BindComponent implements OnInit {
         this.toasterService.pop({
           type: 'success',
           title: '号码绑定成功',
-          showCloseButton:true,
+          showCloseButton: true,
         });
       }
     });
   }
 
   submitUserInfo() {
-    var url = "/NoAuthService/userAddressLName/" + this.wxUser.id + "/" + this.wxUser.longName + "/" + this.wxUser.mailAddr;
-    this.httpClient.post(this.baseUrl + url).subscribe(data => {
+    var url = "/public/userAddressLName/" + this.wxUser.id + "/" + this.wxUser.longName + "/" + this.wxUser.mailAddr;
+    this.httpClient.post(this.baseUrl + url, {}).subscribe(data => {
       console.log("bind result=" + JSON.stringify(data));
       var result: any = data;
       if (result.code == 0) {
@@ -102,10 +117,11 @@ export class BindComponent implements OnInit {
         this.toasterService.pop({
           type: 'success',
           title: '资料修改成功',
-          showCloseButton:true,
+          showCloseButton: true,
         });
         //this.wxUser.tele=this.newTele;
       }
+    }, error => console.log(), () => {
     });
   }
 
@@ -125,11 +141,37 @@ export class BindComponent implements OnInit {
     return bool;
   }
 
-  getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
+  // getUrlParam(name) {
+  //   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  //   var r = window.location.search.substr(1).match(reg);
+  //   if (r != null) return unescape(r[2]);
+  //   return null;
+  // }
+  //
+  // getQueryString(name) {
+  //   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  //   console.log("window.location=" + window.location)
+  //   var r = window.location.substr(1).match(reg);
+  //   console.log("r=" + r);
+  //   if (r != null) return unescape(r[2]);
+  //   return null;
+  // }
+
+  getRequestParams() {
+    var url = "" + window.location; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    console.log("url=" + url);
+    console.log("url.indexOf(?)=" + url.indexOf("?"));
+    if (url.indexOf("?") != -1) {
+      var str = url.substr(url.indexOf("?") + 1);
+      console.log("str=" + str);
+      var strs = str.split("&");
+      for (var i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split("=")[0]] = window.unescape(strs[i].split("=")[1]);
+      }
+    }
+    console.log("theRequest=" + JSON.stringify(theRequest))
+    return theRequest;
   }
 
 }
